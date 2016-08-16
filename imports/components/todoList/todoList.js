@@ -1,19 +1,21 @@
 import angular from 'angular';
 import angularMeteor from 'angular-meteor';
 import template from './todoList.html';
+import {Tasks} from '../../api/tasks.js';
 
 class TodoListCtrl{
-    constructor(){
-        this.tasks = [
-            {text:'task 1'},
-            {text:'task 2'},
-            {text:'task 3'}
-        ];
+    constructor($scope) {
+        $scope.viewModel(this);
+        this.helpers({
+            tasks(){
+                return Tasks.find();
+            }
+        });
     }
 }
 
 export default angular.module('todoList',[angularMeteor])
     .component('todoList', {
         templateUrl: template,
-        controller: TodoListCtrl
+        controller: ['$scope', TodoListCtrl]
     });
