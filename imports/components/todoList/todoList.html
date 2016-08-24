@@ -10,8 +10,8 @@
 </form>
 <ul>
     <li ng-repeat="task in $ctrl.tasks" ng-class="{'checked':task.checked}">
-        <button class="delete" ng-click="TodoListCtrl.removeTask(task)">&times;</button>
-        <input type="checkbox" ng-checked="task.checked" ng-click="TodoListCtrl.setChecked(task)"
+        <button class="delete" ng-click="$ctrl.removeTask(task)">&times;</button>
+        <input type="checkbox" ng-checked="task.checked" ng-click="$ctrl.setChecked(task)"
                class="toggle-checked">
         <label class="text">
             {{task.text}}

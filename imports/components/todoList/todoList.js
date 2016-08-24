@@ -37,11 +37,11 @@ class TodoListCtrl{
         this.newTask = '';
     }
 
-    static removeTask(task) {
+    removeTask(task) {
         Tasks.remove(task._id);
     }
 
-    static setChecked(task) {
+    setChecked(task) {
         Tasks.update(task._id, {
             $set: {
                 checked: !task.checked
