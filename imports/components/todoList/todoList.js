@@ -8,7 +8,12 @@ class TodoListCtrl{
         $scope.viewModel(this);
         this.helpers({
             tasks(){
-                return Tasks.find();
+                return Tasks.find({}, {
+                    sort: {
+                        createdAt: -1
+
+                    }
+                });
             }
         });
     }
@@ -21,6 +26,18 @@ class TodoListCtrl{
         });
 
         this.newTask = '';
+    }
+
+    static removeTask(task) {
+        Tasks.remove(task._id);
+    }
+
+    static setChecked(task) {
+        Tasks.update(task._id, {
+            $set: {
+                checked: !task.checked
+            }
+        })
     }
 }
 
