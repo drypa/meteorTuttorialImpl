@@ -5,15 +5,24 @@ import {Tasks} from '../../api/tasks.js';
 
 class TodoListCtrl{
     constructor($scope) {
+        this.hideCompleted = false;
+        var ctrl = this;
         $scope.viewModel(this);
         this.helpers({
             tasks(){
-                return Tasks.find({}, {
+                const selector = {};
+                if (ctrl.getReactively('hideCompleted')) {
+                    selector.checked = {$ne: true}
+                }
+                return Tasks.find(selector, {
                     sort: {
                         createdAt: -1
 
                     }
                 });
+            },
+            incompleteCount(){
+                return Tasks.find({checked: {$ne: true}}).count();
             }
         });
     }
