@@ -7,3 +7,7 @@
         {{task.text}}
     </li>
 </ul>
+
+<form class="new-task" ng-submit="$ctrl.addTask($ctrl.newTask)">
+    <input ng-model="$ctrl.newTask" type="text" name="text" placeholder="new task"/>
+</form>

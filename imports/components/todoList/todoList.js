@@ -12,7 +12,18 @@ class TodoListCtrl{
             }
         });
     }
+
+    addTask() {
+        var task = this.newTask;
+        Tasks.insert({
+            text: task,
+            createdAt: new Date
+        });
+
+        this.newTask = '';
+    }
 }
+
 
 export default angular.module('todoList',[angularMeteor])
     .component('todoList', {
