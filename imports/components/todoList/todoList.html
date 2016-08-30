@@ -8,7 +8,7 @@
     <input type="checkbox" ng-model="$ctrl.hideCompleted"/>
     Hide Completed tasks
 </label>
-<form class="new-task" ng-submit="$ctrl.addTask($ctrl.newTask)">
+<form class="new-task" ng-submit="$ctrl.addTask($ctrl.newTask)" ng-show="$ctrl.currentUser">
     <input ng-model="$ctrl.newTask" type="text" name="text" placeholder="new task"/>
 </form>
 <ul>
@@ -17,7 +17,7 @@
         <input type="checkbox" ng-checked="task.checked" ng-click="$ctrl.setChecked(task)"
                class="toggle-checked">
         <label class="text">
-            {{task.text}}
+            <span class="strong">{{task.username}}</span> - {{task.text}}
         </label>
     </li>
 </ul>

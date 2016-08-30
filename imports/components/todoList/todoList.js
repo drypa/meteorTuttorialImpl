@@ -2,6 +2,7 @@ import angular from 'angular';
 import angularMeteor from 'angular-meteor';
 import template from './todoList.html';
 import {Tasks} from '../../api/tasks.js';
+import { Meteor } from 'meteor/meteor'
 
 class TodoListCtrl{
     constructor($scope) {
@@ -23,6 +24,9 @@ class TodoListCtrl{
             },
             incompleteCount(){
                 return Tasks.find({checked: {$ne: true}}).count();
+            },
+            currentUser(){
+                return Meteor.user();
             }
         });
     }
@@ -31,7 +35,9 @@ class TodoListCtrl{
         var task = this.newTask;
         Tasks.insert({
             text: task,
-            createdAt: new Date
+            createdAt: new Date,
+            owner: Meteor.userId(),
+            username: Meteor.user().username
         });
 
         this.newTask = '';
