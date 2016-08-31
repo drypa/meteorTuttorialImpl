@@ -9,6 +9,8 @@ class TodoListCtrl{
         this.hideCompleted = false;
         var ctrl = this;
         $scope.viewModel(this);
+        ctrl.subscribe('tasks');
+
         this.helpers({
             tasks(){
                 const selector = {};
