@@ -46,6 +46,10 @@ class TodoListCtrl{
     setChecked(task) {
         Meteor.call('tasks.setChecked', task._id, !task.checked);
     }
+    setPrivate(task){
+        console.log('new private:'+!task.private);
+        Meteor.call('tasks.setPrivate', task._id, !task.private);
+    }
 }
 
 

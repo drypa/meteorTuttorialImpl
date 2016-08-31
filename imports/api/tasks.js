@@ -6,8 +6,16 @@ export const Tasks = new Mongo.Collection('tasks');
 
 
 if (Meteor.isServer) {
-    Meteor.publish('tasks', ()=> {
-        return Tasks.find();
+    Meteor.publish('tasks', function () {
+        return Tasks.find({
+            $or: [{
+                private: {
+                    $ne: true
+                }
+            }, {
+                owner: this.userId
+            }]
+        });
     });
 }
 
@@ -22,20 +30,46 @@ Meteor.methods({
             text,
             createdAt: new Date(),
             owner: Meteor.userId(),
-            username: Meteor.user().username
+            username: Meteor.user().username,
+            private: false
         });
     },
     'tasks.remove'(taskId){
-        console.log(taskId);
         check(taskId, String);
+
+        if (task.owner !== Meteor.userId()) {
+            throw new Meteor.Error('not-autorized');
+        }
+
         Tasks.remove(taskId);
     },
     'tasks.setChecked'(taskId, setChecked){
         check(taskId, String);
         check(setChecked, Boolean);
+
+        if (task.owner !== Meteor.userId()) {
+            throw new Meteor.Error('not-autorized');
+        }
+
         Tasks.update(taskId, {
             $set: {
                 checked: setChecked
+            }
+        });
+    },
+    'tasks.setPrivate'(taskId, setToPrivate){
+        check(taskId, String);
+        check(setToPrivate, Boolean);
+
+        const task = Tasks.findOne(taskId);
+
+        if (task.owner !== Meteor.userId()) {
+            throw new Meteor.Error('not-autorized');
+        }
+
+        Tasks.update(taskId, {
+            $set: {
+                private: setToPrivate
             }
         });
     }
