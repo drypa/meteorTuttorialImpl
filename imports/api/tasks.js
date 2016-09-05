@@ -29,15 +29,16 @@ Meteor.methods({
         Tasks.insert({
             text,
             createdAt: new Date(),
-            owner: Meteor.userId(),
+            owner: Meteor.userId,
             username: Meteor.user().username,
             private: false
         });
     },
     'tasks.remove'(taskId){
         check(taskId, String);
-
-        if (task.owner !== Meteor.userId()) {
+        const task = Tasks.findOne(taskId);
+        console.dir(task);
+        if (task.owner !== this.userId) {
             throw new Meteor.Error('not-autorized');
         }
 
@@ -47,7 +48,8 @@ Meteor.methods({
         check(taskId, String);
         check(setChecked, Boolean);
 
-        if (task.owner !== Meteor.userId()) {
+        const task = Tasks.findOne(taskId);
+        if (task.owner !== this.userId) {
             throw new Meteor.Error('not-autorized');
         }
 

@@ -20,3 +20,4 @@ angular-templates
 shell-server
 accounts-password
 dotansimha:accounts-ui-angular
+practicalmeteor:mocha
