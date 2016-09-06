@@ -29,7 +29,14 @@ if (Meteor.isServer) {
 
                 assert.equal(Tasks.find().count(), 0);
 
-            })
+            });
+
+            it('foreign task delete forbidden', ()=> {
+                const deleteTask = Meteor.server.method_handlers['tasks.remove'];
+                assert.throws(()=> {
+                    deleteTask.apply({userId: Random.id()}, [taskId]);
+                }, Meteor.Error, 'not-autorized')
+            });
         });
     });
 }
